@@ -1,0 +1,16 @@
+version: v1
+plugins:
+  - name: go
+    out: pb
+    opt: module=github.com/sugamon/grpc-openapi-example/pb
+  - name: go-grpc
+    out: pb
+    opt: module=github.com/sugamon/grpc-openapi-example/pb
+  - name: openapiv2
+    out: docs
+    opt: allow_merge=true
+  - name: grpc-gateway
+    out: pb
+    opt:
+      - module=github.com/sugamon/grpc-openapi-example/pb
+      - generate_unbound_methods=true

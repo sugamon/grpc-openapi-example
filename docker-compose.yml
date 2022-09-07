@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: "swagger-ui"
+    # ports:
+    #   - "8080:8080"
+    volumes:
+      - ./docs/apidocs.swagger.json:/apidocs.swagger.json
+    environment:
+      SWAGGER_JSON: /apidocs.swagger.json
+      BASE_URL: /swagger
+  grpc-gateway:
+    image: golang:1.18.0
+    volumes:
+      - .:/go/grpcgateway
+    ports:
+      - "8080:8080"
+    tty: true
+    stdin_open: true
+    working_dir: /go/grpcgateway
+    command: go run cmd/grpcgateway/main.go
+  grpc-server:
+    image: golang:1.18.0
+    volumes:
+      - .:/go/grpcserver
+    ports:
+      - "50051:50051"
+    tty: true
+    stdin_open: true
+    working_dir: /go/grpcserver
+    command: go run cmd/grpcserver/main.go
